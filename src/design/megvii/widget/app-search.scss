@@ -1,0 +1,126 @@
+.app-search.dropdown.show .dropdown-toggle {
+    border: 1px solid #7a8d99;
+    input {
+        background: #fff;
+    }
+}
+
+.app-search {
+    width: 300px;
+    max-width: 300px;
+    min-width: 100px;
+    padding: 0;
+    margin-top: 11px;
+    height: 40px;
+    margin-right: 20px;
+
+    .btn.dropdown-toggle {
+        padding: 0;
+    }
+
+    .dropdown-menu {
+        min-width: 480px;
+        max-width: 600px;
+        padding: 20px 10px;
+        transition: all 360ms ease 0s;
+
+        .content {
+            display: flex;
+            .left {
+                flex: 1 1 0%;
+                overflow: hidden;
+                border-right: 1px solid $border-color;
+
+                .resource {
+                    display: block;
+                    height: 28px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-weight: 400;
+                    padding: 5px 12px;
+                    overflow: hidden;
+
+                    label {
+                        font-weight: 400;
+                    }
+                }
+            }
+            .right {
+                flex: 1 1 0%;
+                overflow: hidden;
+            }
+        }
+
+        .title {
+            display: block;
+            height: 28px;
+            line-height: 28px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 400;
+            padding: 0px 12px;
+            overflow: hidden;
+            .text {
+                opacity: 0.7;
+            }
+            .action {
+                height: 20px;
+                float: right;
+                opacity: 0.7;
+                margin-top: 8px;
+            }
+            .action:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+        .history {
+            line-height: 28px;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: flex;
+            flex-wrap: wrap;
+            -webkit-box-pack: start;
+            justify-content: flex-start;
+            height: auto;
+            padding: 0px 12px;
+            overflow: hidden;
+            margin: 0px -3px -4px;
+            .btn {
+                margin: 4px 5px 4px 0;
+                white-space: pre-wrap;
+            }
+        }
+        .history-access {
+            .link {
+                display: block;
+                height: 28px;
+                line-height: 28px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: 400;
+                padding: 0px 12px;
+                overflow: hidden;
+                .action {
+                    cursor: pointer;
+                    height: 20px;
+                    float: right;
+                    opacity: 0.7;
+                    margin-top: 7px;
+                    font-size: 15px;
+                }
+                .action:hover {
+                    opacity: 1;
+                }
+            }
+
+            .link:hover {
+                background: $gray;
+                .action {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

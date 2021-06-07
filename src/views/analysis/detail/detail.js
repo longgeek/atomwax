@@ -1,0 +1,206 @@
+import appConfig from "@/app.config";
+import PageHeader from "@/components/page-header";
+
+import Emailsent from "@/components/widgets/emailsent";
+
+import { projectData } from "../data-projects";
+
+/**
+ * Analysis Detail
+ */
+export default {
+    page: {
+        title: "",
+        meta: [{ name: "description", content: appConfig.description }]
+    },
+    components: { PageHeader, Emailsent },
+    created() {
+        this.project = this.$route.query.project;
+        this.init();
+    },
+    data() {
+        return {
+            project: '',
+            projectData: projectData,
+            page_title: "",
+            page_items: [
+                { text: "健康分析", to: {name: "analysis"} },
+                { text: this.$route.query.project },
+            ],
+            title: "Dashboard",
+            chartOptions: {
+                chart: {
+                    offsetY: -10
+                },
+                plotOptions: {
+                    radialBar: {
+                        startAngle: -135,
+                        endAngle: 135,
+                        dataLabels: {
+                            name: {
+                                fontSize: "13px",
+                                color: undefined,
+                                offsetY: 60
+                            },
+                            value: {
+                                offsetY: 22,
+                                fontSize: "16px",
+                                color: undefined,
+                                formatter: function(val) {
+                                    return val + "%";
+                                }
+                            }
+                        }
+                    }
+                },
+                colors: ["#556ee6"],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: "dark",
+                        shadeIntensity: 0.15,
+                        inverseColors: false,
+                        opacityFrom: 1,
+                        opacityTo: 1,
+                        stops: [0, 50, 65, 91]
+                    }
+                },
+                stroke: {
+                    dashArray: 4
+                },
+                labels: [""]
+            },
+            series: [67],
+            series1: [
+                {
+                    name: "Commit 数",
+                    data: []
+                },
+                {
+                    name: "Issue 数",
+                    data: []
+                },
+                {
+                    name: "Pull Request",
+                    data: []
+                }
+            ],
+            chartOptions1: {
+                chart: {
+                    stacked: true,
+                    toolbar: {
+                        show: false
+                    },
+                    zoom: {
+                        enabled: true
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: "15%",
+                        endingShape: "rounded"
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                xaxis: {
+                    categories: [
+                        "一",
+                        "二",
+                        "三",
+                        "四",
+                        "五",
+                        "六",
+                        "七",
+                        "八",
+                        "九",
+                        "十",
+                        "十一",
+                        "十二"
+                    ]
+                },
+                colors: ["#556ee6", "#f1b44c", "#34c38f"],
+                legend: {
+                    position: "bottom"
+                },
+                fill: {
+                    opacity: 1
+                }
+            },
+            year: 2019,
+            yearData: {
+                commit: {
+                    2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                    2020: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                    2021: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                },
+                issue: {
+                    2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                    2020: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                    2021: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                },
+                pull_request: {
+                    2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                    2020: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                    2021: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
+                }
+            }
+        };
+    },
+    methods: {
+        init() {
+            // 1. 获取 commit 数据
+            let commit = projectData[this.project].data.commit;
+            for (let i in commit) {
+                let commitYear = new Date(commit[i].CommitDate).getUTCFullYear();
+                let commitMonth = new Date(commit[i].CommitDate).getMonth();
+                if (commitYear == 2019) this.yearData.commit[2019][commitMonth] += 1;
+                if (commitYear == 2020) this.yearData.commit[2020][commitMonth] += 1;
+                if (commitYear == 2021) this.yearData.commit[2021][commitMonth] += 1;
+            }
+
+
+            // 2. 获取 issue 数据
+            let issue = projectData[this.project].data.issue;
+            for (let i in issue) {
+                let issueYear = new Date(issue[i].data.created_at).getUTCFullYear();
+                let issueMonth = new Date(issue[i].data.created_at).getMonth();
+                if (issueYear == 2019) this.yearData.issue[2019][issueMonth] += 1;
+                if (issueYear == 2020) this.yearData.issue[2020][issueMonth] += 1;
+                if (issueYear == 2021) this.yearData.issue[2021][issueMonth] += 1;
+            }
+
+
+            // 3. 获取 pull request 数据
+            let pull_request = projectData[this.project].data.pull_request;
+            for (let i in pull_request) {
+                let requestYear = new Date(pull_request[i].data.created_at).getUTCFullYear();
+                let requestMonth = new Date(pull_request[i].data.created_at).getMonth();
+                if (requestYear == 2019) this.yearData.pull_request[2019][requestMonth] += 1;
+                if (requestYear == 2020) this.yearData.pull_request[2020][requestMonth] += 1;
+                if (requestYear == 2021) this.yearData.pull_request[2021][requestMonth] += 1;
+            }
+
+            this.changeYear(this.year);
+        },
+        changeYear(year){
+            this.year = year;
+            this.series1 = [
+                {
+                    name: "Commit 数",
+                    data: Object.values(this.yearData.commit[this.year]),
+                },
+                {
+                    name: "Issue 数",
+                    data: Object.values(this.yearData.issue[this.year]),
+                },
+                {
+                    name: "Pull Request",
+                    data: Object.values(this.yearData.pull_request[this.year]),
+                }
+            ];
+        },
+    }
+};

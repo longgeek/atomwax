@@ -1,0 +1,9 @@
+.analysis-page {
+    .card {
+        cursor: pointer;
+        border: 1px solid #fff;
+    }
+    .card:hover {
+        border: 1px solid $info;
+    }
+}

@@ -1,0 +1,48 @@
+.navbar-header.horizon-border {
+    padding-right: 10px;
+
+    #vertical-menu-btn {
+        border-left: 0;
+        margin-left: 5px;
+        border-right: 1px solid $border-color;
+    }
+
+    .app-search {
+        margin-left: 25px;
+    }
+
+    .cover-data {
+        opacity: 0.7;
+        padding: 17px 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: auto;
+        min-width: 50px;
+    }
+
+    .cover-data:hover {
+        opacity: 1;
+    }
+
+    .dropdown {
+        border-left: 1px solid $border-color;
+    }
+
+    .header-item {
+        border-radius: 0;
+        padding: 0 18px;
+        line-height: 60px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        > i {
+            margin-top: -2px !important;
+            margin-right: 7px;
+            vertical-align: middle;
+        }
+    }
+
+    .header-item:hover {
+        background-color: $gray;
+    }
+}

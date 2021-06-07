@@ -1,0 +1,97 @@
+.room-item {
+    min-height: 75px;
+    position: relative;
+    padding: 20px 10px 0;
+    .header {
+        position: absolute;
+        width: 60px;
+        display: inline-block;
+        font-weight: 900;
+        float: left;
+        top: 20px;
+        text-align: center;
+        border: 1px solid #f6f9fc;
+        color: #295977;
+        outline: none;
+        background: $gray;
+        border-radius: 3px;
+        height: 30px;
+        padding: 6px;
+        outline: 0;
+    }
+    .header:hover {
+        cursor: pointer;
+        color: $blue;
+    }
+    .header.plus {
+        border: 1px dashed #bdc6cc;
+        color: #bdc6cc;
+        outline: none;
+        -webkit-user-select: none;
+        background: #fff;
+    }
+    .header.plus:hover {
+        cursor: pointer;
+        border: 1px dashed $text-color;
+        color: $text-color;
+    }
+    .box-content {
+        display: inline-block;
+        margin-left: 80px;
+        .room-item-box {
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-block;
+            height: 30px;
+            width: 20px;
+            margin-right: 12px;
+            background: #285775;
+            border-radius: 2px;
+            position: relative;
+            text-align: center;
+            outline: 0;
+            .room-item-box__count {
+                position: absolute;
+                bottom: -20px;
+                opacity: 0.2;
+                left: 0;
+                right: 0;
+                width: 100%;
+                font-family: monospace;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            .room-item-box__inner {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: $primary;
+                max-height: 100%;
+                border-radius: 2px;
+            }
+        }
+        .room-item-box.plus {
+            outline: none;
+            background: #fff;
+            border: 1px dashed #bdc6cc;
+            .room-item-box__inner {
+                background: #fff;
+                height: 100%;
+                .fa-plus {
+                    margin-top: 8px;
+                    color: #bdc6cc;
+                }
+            }
+        }
+        .room-item-box.plus:hover {
+            border-color: $text-color;
+            .fa-plus {
+                color: $text-color;
+            }
+        }
+        .room-item-box.disabled {
+            background: #eee;
+        }
+    }
+}

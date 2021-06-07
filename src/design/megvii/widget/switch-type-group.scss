@@ -1,0 +1,54 @@
+.switch-type-group {
+    float: right;
+    display: inline-block;
+    margin-left: 8px;
+}
+.switch-type-group li {
+    display: inline-block;
+    padding: 0 12px;
+    margin-right: -1px;
+    line-height: 28px;
+    border: 1px solid $border-color;
+    font-size: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    float: left;
+    list-style: none;
+}
+.switch-type-group li .fa {
+    width: auto;
+    margin-right: 8px;
+}
+.switch-type-group li.on,
+.switch-type-group li.on:hover {
+    background-color: darken($gray, 3%);
+}
+.switch-type-group li:hover {
+    background-color: $gray;
+}
+.switch-type-group li:focus {
+    outline: 0;
+}
+.switch-type-group li:first-child {
+    -webkit-border-top-left-radius: 3px;
+    -moz-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.switch-type-group li:last-child {
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.switch-type-group[disabled] > li {
+    cursor: no-drop;
+    opacity: 0.65;
+}
+.switch-type-group[disabled] > li:hover {
+    background: transparent;
+}

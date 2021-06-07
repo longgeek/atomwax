@@ -1,0 +1,41 @@
+.permission-setting-box {
+    padding: 0 20px;
+    margin-bottom: 10px;
+    .header {
+        padding: 10px 0;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        border-bottom: 1px solid $border-color;
+        .switch {
+            float: right;
+            display: inline-block;
+        }
+    }
+    .rules {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin-bottom: 6px;
+            display: inline-block;
+            width: 33.3%;
+            padding: 5px 10px;
+            color: #5f708a;
+            text-align: left;
+            font-weight: 400;
+            white-space: nowrap;
+            .custom-control {
+                cursor: pointer;
+
+                .custom-control-input {
+                    cursor: pointer;
+                }
+                .custom-control-label {
+                    display: block;
+                }
+            }
+        }
+    }
+}

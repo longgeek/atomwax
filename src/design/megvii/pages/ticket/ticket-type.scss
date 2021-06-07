@@ -1,0 +1,190 @@
+.ticket-type {
+    .section {
+        margin-bottom: 50px;
+    }
+    .section .categories > h4 {
+      font-weight: bold;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+    .section h5 {
+        font-weight: 400;
+    }
+
+    .section h4.heading-left-thin {
+      margin-bottom: 0;
+    }
+
+    .featured-articles-list {
+      width: 100%;
+    }
+
+    .featured-articles-list li {
+      border-bottom: 1px solid #e1ecf9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      min-height: 5rem;
+    }
+
+    .featured-articles-list li.disabled {
+        opacity: 0.5;
+        cursor: no-drop;
+    }
+    @media (min-width: 768px) {
+      .featured-articles-list {
+        display: grid;
+        grid-template-rows: 33% 34% 33%;
+        grid-template-columns: 50% 50%;
+        width: calc(100% + 2rem);
+      }
+
+      .featured-articles-list li {
+        margin-right: 2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .featured-articles-list {
+        padding-left: 20px;
+        grid-template-rows: 50% 50%;
+        grid-template-columns: 25% 25% 25% 25%;
+      }
+    }
+
+    .featured-articles-list a {
+      color: $text-color;
+      display: -webkit-box;
+      -moz-line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -moz-box-orient: vertical;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      padding: 0.5rem 2rem 0 0;
+      font-weight: 500;
+    }
+
+    .featured-articles-list a:after {
+      content: ">";
+      position: absolute;
+      right: 0;
+      top: calc(50% - 0.5rem);
+    }
+
+    .featured-articles-list a:focus,
+    .featured-articles-list a:hover {
+      color: $primary;
+      text-decoration: none;
+    }
+
+    .featured-articles-list .disabled a:focus,
+    .featured-articles-list .disabled a:hover {
+        color: inherit;
+        cursor: no-drop;
+    }
+
+    // ticket blocks-list
+    .blocks-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      list-style: none;
+      padding: 0;
+    }
+
+    @media (min-width: 768px) {
+      .blocks-list {
+        margin: 0 -15px;
+      }
+    }
+
+    .blocks-item {
+      border: 1px solid $dark;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: rgba(20, 28, 58, 1);
+      display: flex;
+      flex: 1 0 300px;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 0 30px;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .blocks-item.disabled {
+        opacity: 0.5;
+        cursor: no-drop;
+    }
+
+    @media (min-width: 768px) {
+      .blocks-item {
+        margin: 0 15px 30px;
+      }
+    }
+
+    .blocks-item:hover, .blocks-item:focus, .blocks-item:active {
+      background-color: $dark;
+    }
+
+    .blocks-item:hover *, .blocks-item:focus *, .blocks-item:active * {
+      color: rgba(255, 255, 255, 1);
+      text-decoration: none;
+    }
+
+    .blocks-item.disabled:hover, .blocks-item.disabled:focus, .blocks-item.disabled:active {
+        background-color: inherit;
+    }
+
+    .blocks-item.disabled:hover *, .blocks-item.disabled:focus *, .blocks-item.disabled:active * {
+        color: inherit;
+    }
+
+    .blocks-item-internal {
+      background-color: transparent;
+      border: 1px solid #ddd;
+    }
+
+    .blocks-item-internal .icon-lock::before {
+      content: "\1F512";
+      font-size: 15px;
+      bottom: 5px;
+      position: relative;
+    }
+
+    .blocks-item-internal a {
+      color: #333333;
+    }
+
+    .blocks-item-link {
+      color: rgba(20, 28, 58, 1);
+      padding: 25px 20px;
+      position: relative;
+    }
+
+    .blocks-item-link:hover, .blocks-item-link:focus, .blocks-item-link:active {
+      text-decoration: none;
+    }
+
+    .blocks-item-title {
+      margin-bottom: 0;
+      .icon {
+          position: absolute;
+          left: 30px;
+          font-size: 30px;
+          top: 17px;
+          width: 30px;
+          height: 30px;
+      }
+    }
+
+    .blocks-item-description {
+      font-weight: 300;
+      margin: 0;
+    }
+
+    .blocks-item-description:not(:empty) {
+      margin-top: 10px;
+    }
+}

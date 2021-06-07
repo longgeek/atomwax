@@ -1,0 +1,90 @@
+.dot-status {
+    display: inline-block;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    height: 16px;
+    width: 16px;
+    border-width: 4px;
+    border-style: solid;
+    margin-right: 5px;
+    margin-top: -1px;
+    vertical-align: middle;
+    font-size: 12px;
+    background: #fff;
+    border-color: #eef3f6;
+}
+
+.red > .dot-status,
+.dot-status.red,
+.dot-status.host_3, // 故障
+.dot-status.fitting_5 {
+    background: $red;
+    border-color: #ffd8d8;
+}
+.yellow > .dot-status,
+.dot-status.yellow,
+.dot-status.host_-2, // 待确认
+.dot-status.fitting_4 { // 配件异常
+    background: $yellow;
+    border-color: lighten($yellow, 30%);
+}
+.blue > .dot-status,
+.dot-status.blue,
+.dot-status.host_6, // 库房
+.dot-status.fitting_7 {
+    background: $blue;
+    border-color: lighten($blue, 40%);
+}
+.primary > .dot-status,
+.dot-status.primary,
+.dot-status.host_-1 { // 上架
+    background: #34e9e2;
+    border-color: lighten($primary, 45%);
+}
+.info > .dot-status,
+.dot-status.info {
+    background: $info;
+    border-color: lighten($info, 48%);
+}
+.gray > .dot-status,
+.dot-status.gray,
+.dot-status.host_2, // 闲置
+.dot-status.fitting_1 {
+    background: #bdbdbd;
+    border-color: #ebf1f8;
+}
+.dot-status.host_1, // 在线
+.dot-status.fitting_2,
+.dot-status.green {
+    background: #11c98d;
+    border-color: #c1fdea;
+}
+.dot-status.host_5, // 出库
+.dot-status.fitting_3 {
+    background: #aed581;
+    border-color: #f6fffced;
+}
+.dot-status.host_4, // 维修
+.dot-status.fitting_6 {
+    background: #ff70e7;
+    border-color: #ffe3fa;
+}
+.dot-status.host_7, // 外借
+.dot-status.fitting_8 { // 外借
+    background: #673AB7;
+    border-color: #ece1ff;
+}
+.dot-status.host_8 { // 测试
+    background: #ffeb3b;
+    border-color: #fdf8cf;
+}
+.dot-status.host_0 { // 离线
+    background: #795548;
+    border-color: #f6fffced;
+}
+.dot-status.host_, // 无状态
+.dot-status.fitting_ {
+    background: #607d8b;
+    border-color: #e4d0c9;
+}

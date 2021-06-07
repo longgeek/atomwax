@@ -1,0 +1,38 @@
+.page-role-detail {
+    .role-header {
+        padding: 20px;
+        background-color: #f9fbfd;
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzU0IiBoZWlnaHQ9IjIzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGRlZnM+PHBhdGggZD0iTTggMGgzMzhhOCA4IDAgMCAxIDggOHYyMjJIMFY4YTggOCAwIDAgMSA4LTh6IiBpZD0iYSIvPjwvZGVmcz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxtYXNrIGlkPSJiIiBmaWxsPSIjZmZmIj48dXNlIHhsaW5rOmhyZWY9IiNhIi8+PC9tYXNrPjx1c2UgZmlsbD0iI0Y5RkJGRCIgeGxpbms6aHJlZj0iI2EiLz48ZyBvcGFjaXR5PSIuNjUiIG1hc2s9InVybCgjYikiIGZpbGw9IiNFRkY0RjkiPjxwYXRoIGQ9Ik0zMTQuNzMxIDE0MC44OThsLTkxLjEzNC01MS45MjF2MTAzLjg0OHpNMTc4LjAzLTE4OUwwLTg3LjM3NnYyMDMuNzYyTDE3OC4wMyAyMThWNjMuNEw5Mi4zNjcgMTQuNTAybDg1LjY2My00OC44OTd6Ii8+PHBhdGggZD0iTTE3OC4wMyAxNS4wMjRMMzU1IDExNi4yNVYtODYuMjAxeiIvPjwvZz48L2c+PC9zdmc+);
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        .role-name {
+            margin-bottom: 4px;
+            line-height: 32px;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+            overflow: hidden;
+            font-size: 16px;
+            line-height: 1.4;
+            font-family: Roboto,PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,微软雅黑,STHeitiSC-Light,simsun,宋体,WenQuanYi Zen Hei,WenQuanYi Micro Hei,sans-serif;
+            font-style: normal;
+            font-stretch: normal;
+            letter-spacing: normal;
+            font-weight: 600;
+            color: #36435c;
+        }
+        .role-memo {
+            margin-bottom: 12px;
+            font-family: Roboto,PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,微软雅黑,STHeitiSC-Light,simsun,宋体,WenQuanYi Zen Hei,WenQuanYi Micro Hei,sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.67;
+            letter-spacing: normal;
+            color: #79879c;
+            word-break: break-all;
+        }
+    }
+}

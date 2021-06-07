@@ -1,0 +1,51 @@
+.dropdown-menu {
+    padding: 10px 8px;
+
+    > li > a {
+        color: $text-color;
+        font-weight: 400;
+        line-height: 25px;
+        padding: 3px 15px 3px 10px;
+        border-radius: $border-radius;
+    }
+
+    .icon {
+        margin-right: 5px;
+    }
+
+     > li > a.disabled {
+        cursor: no-drop;
+    }
+
+    > li.divider {
+        margin: 5px 0;
+    }
+}
+
+// Dark mode
+.dropdown.dropdown-dark {
+    .dropdown-menu {
+        color: #fff;
+        min-width: 140px;
+        background: $dark;
+        border: 1px solid $dark;
+
+        > li {
+            > a {
+                color: #fff;
+            }
+            > a:hover, > a:focus, > a.active {
+                color: #fff;
+                text-decoration: none;
+                background: darken($dark, 3%);
+            }
+            > a.disabled {
+                background: 0 0;
+                color: rgba(255,255,255,.4);
+            }
+            > .dropdown-divider {
+                border-top-color: lighten($dark, 3%);
+            }
+        }
+    }
+}

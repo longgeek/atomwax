@@ -1,0 +1,15 @@
+.ticket-device-on-racking {
+    .params {
+        > .alert {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        > .card {
+            padding: 15px 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border: 1px solid #b8dbff;
+            border-top: none !important;
+        }
+    }
+}

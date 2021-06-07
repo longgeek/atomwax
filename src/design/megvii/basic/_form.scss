@@ -1,0 +1,23 @@
+.form-control,
+.input-group-text {
+    height: 30px;
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1;
+    color: $text-color;
+    border-color: #e1ecf9;
+    border-radius: $border-radius;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: $primary;
+}
+
+form.needs-validation .form-group > label > .key {
+    color: #ca2621;
+}
+
+textarea.form-control {
+    padding: 12px;
+}

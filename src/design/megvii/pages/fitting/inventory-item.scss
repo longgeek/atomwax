@@ -1,0 +1,82 @@
+.inventory-item {
+    height: 150px;
+    max-height: 150px;
+    padding: 20px 30px 20px;
+    margin-bottom: 25px;
+    border-radius: $border-radius;
+    background: $gray;
+    position: relative;
+    border: 1px solid #e0ecf9;
+    font-family: monospace;
+    outline: 0;
+
+    .tags {
+        color: inherit;
+        float: right;
+        margin-right: -5px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    .nums {
+        font-size: 32px;
+        font-weight: 700;
+        margin-right: 5px;
+    }
+    .small {
+        color: $text-color;
+    }
+    .type {
+        display: table;
+        font-size: 13px;
+        padding: 2px 5px;
+        background: #e0ecf9;
+        border-radius: $border-radius;
+    }
+    .info {
+        color: #94adb7;
+        margin-top: 10px;
+    }
+}
+
+.inventory-item.dark {
+    background: #2a556f;
+    .small {
+        color: #fff;
+    }
+    .type {
+        color: #fff;
+        background: #3b5e73;
+    }
+}
+
+.inventory-item.none {
+    opacity: 0.5;
+    background: $gray;
+
+    .nums {
+        color: $text-muted;
+    }
+    .tags {
+        color: #94adb7;
+    }
+}
+.inventory-item.dark.none {
+    opacity: 0.7;
+    background: #2a556f;
+}
+.inventory-item.dark.none:hover {
+    cursor: no-drop;
+    background: #2a556f;
+}
+
+.inventory-item:hover {
+    cursor: pointer;
+    background: darken($gray, 3%);
+}
+.inventory-item.dark:hover {
+    background: lighten(#2a556f, 7%);
+}
+.inventory-item.none:hover {
+    cursor: no-drop;
+    background: $gray;
+}

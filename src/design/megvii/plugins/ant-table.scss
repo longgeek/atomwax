@@ -1,0 +1,19 @@
+.ant-table-bordered.ant-table-empty .ant-table-placeholder {
+    border-color: $border-color;
+}
+.ant-table-wrapper .ant-table-placeholder {
+    border-bottom: 1px solid $border-color;
+}
+.ant-table-bordered .ant-table-thead > tr > th, .ant-table-bordered .ant-table-tbody > tr > td {
+    border-right: 1px solid $border-color;
+}
+
+.ant-table-bordered .ant-table-header > table, .ant-table-bordered .ant-table-body > table, .ant-table-bordered .ant-table-fixed-left table, .ant-table-bordered .ant-table-fixed-right table {
+    border-color: $border-color;
+}
+.ant-table-thead>tr>th.ant-table-column-has-sorters {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}

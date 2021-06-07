@@ -1,0 +1,10 @@
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder,
+input::-moz-placeholder,   /* Mozilla Firefox 19+ */
+textarea::-moz-placeholder,
+input:-moz-placeholder,    /* Mozilla Firefox 4 to 18 */
+textarea:-moz-placeholder,
+input:-ms-input-placeholder,  /* Internet Explorer 10-11 */
+textarea:-ms-input-placeholder {
+    line-height: 1.5;
+}

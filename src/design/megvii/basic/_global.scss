@@ -1,0 +1,20 @@
+.table-responsive {
+    overflow-x: auto;
+    min-height: .01%;
+}
+
+.relative {
+    position: relative;
+}
+
+.text-norwap {
+    white-space: nowrap;
+}
+
+#app,
+#layout-wrapper,
+.main-content {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
