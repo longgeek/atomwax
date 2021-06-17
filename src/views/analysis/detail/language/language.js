@@ -1,9 +1,6 @@
 import appConfig from "@/app.config";
 import PageHeader from "@/components/page-header";
 
-
-import { projectData } from "../../data-projects";
-
 /**
  * Analysis Detail
  */
@@ -15,12 +12,15 @@ export default {
     components: { PageHeader },
     created() {
         this.project = this.$route.query.project;
-        this.init();
+        this.API.call({action: "Project:Detail", params: {project: this.project}}).then(rsp => { this.projectData = rsp.data.data; })
     },
     data() {
         return {
             project: '',
-            projectData: projectData,
+            projectData: {
+                detail: {},
+                cloc: {},
+            },
             page_title: "",
             page_items: [
                 { text: "健康分析", to: {name: "analysis"} },
@@ -30,8 +30,5 @@ export default {
             title: "Dashboard",
         };
     },
-    methods: {
-        init() {
-        }
-    }
+    methods: {}
 };

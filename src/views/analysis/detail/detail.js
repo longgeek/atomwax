@@ -3,8 +3,6 @@ import PageHeader from "@/components/page-header";
 
 import Emailsent from "@/components/widgets/emailsent";
 
-import { projectData } from "../data-projects";
-
 /**
  * Analysis Detail
  */
@@ -16,12 +14,15 @@ export default {
     components: { PageHeader, Emailsent },
     created() {
         this.project = this.$route.query.project;
-        this.init();
+        this.API.call({action: "Project:Detail", params: {project: this.project}}).then(rsp => { this.projectData = rsp.data.data; this.init(); })
     },
     data() {
         return {
+            projectData: {
+                detail: {},
+                cloc: {},
+            },
             project: '',
-            projectData: projectData,
             page_title: "",
             page_items: [
                 { text: "健康分析", to: {name: "analysis"} },
@@ -70,7 +71,7 @@ export default {
                 },
                 labels: [""]
             },
-            series: [67],
+            series: [0],
             series1: [
                 {
                     name: "Commit 数",
@@ -129,7 +130,7 @@ export default {
                     opacity: 1
                 }
             },
-            year: 2019,
+            year: 2021,
             yearData: {
                 commit: {
                     2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
@@ -152,21 +153,36 @@ export default {
     methods: {
         init() {
             // 1. 获取 commit 数据
-            let commit = projectData[this.project].data.commit;
+            let commit = this.projectData.commits;
             for (let i in commit) {
-                let commitYear = new Date(commit[i].CommitDate).getUTCFullYear();
-                let commitMonth = new Date(commit[i].CommitDate).getMonth();
+                let commitYear;
+                let commitMonth;
+
+                if (commit[i].hasOwnProperty('CommitData')) {
+                    commitYear = new Date(commit[i].CommitDate).getUTCFullYear();
+                    commitMonth = new Date(commit[i].CommitDate).getMonth();
+                } else {
+                    commitYear = new Date(commit[i].data.CommitDate).getUTCFullYear();
+                    commitMonth = new Date(commit[i].data.CommitDate).getMonth();
+                }
                 if (commitYear == 2019) this.yearData.commit[2019][commitMonth] += 1;
                 if (commitYear == 2020) this.yearData.commit[2020][commitMonth] += 1;
                 if (commitYear == 2021) this.yearData.commit[2021][commitMonth] += 1;
             }
 
-
             // 2. 获取 issue 数据
-            let issue = projectData[this.project].data.issue;
+            let issue = this.projectData.issue;
             for (let i in issue) {
-                let issueYear = new Date(issue[i].data.created_at).getUTCFullYear();
-                let issueMonth = new Date(issue[i].data.created_at).getMonth();
+                let issueYear;
+                let issueMonth;
+
+                if (issue[i].hasOwnProperty('data')) {
+                    issueYear = new Date(issue[i].data.created_at).getUTCFullYear();
+                    issueMonth = new Date(issue[i].data.created_at).getMonth();
+                } else {
+                    issueYear = new Date(issue[i].created_at).getUTCFullYear();
+                    issueMonth = new Date(issue[i].created_at).getMonth();
+                }
                 if (issueYear == 2019) this.yearData.issue[2019][issueMonth] += 1;
                 if (issueYear == 2020) this.yearData.issue[2020][issueMonth] += 1;
                 if (issueYear == 2021) this.yearData.issue[2021][issueMonth] += 1;
@@ -174,7 +190,7 @@ export default {
 
 
             // 3. 获取 pull request 数据
-            let pull_request = projectData[this.project].data.pull_request;
+            let pull_request = this.projectData.pull_requests;
             for (let i in pull_request) {
                 let requestYear = new Date(pull_request[i].data.created_at).getUTCFullYear();
                 let requestMonth = new Date(pull_request[i].data.created_at).getMonth();

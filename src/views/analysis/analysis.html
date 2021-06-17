@@ -2,48 +2,47 @@
     <PageHeader :title="page_title" :items="page_items" />
     <PageIntroduction :icon="page_icon_class" :title="page_intro_title" :content="page_intro_content" />
     <div class="row mt-4">
-        <div v-for="(v, k, index) in projectData" :key="index" class="col-xl-3 col-sm-6">
-            <router-link :to="{name: 'analysis-detail', query: {project: k}}">
+        <div v-for="(item, index) in projects" :key="index" class="col-xl-3 col-sm-6">
+            <router-link :to="{name: 'analysis-detail', query: {project: item.name}}">
                 <div class="card text-center">
                     <div class="card-body">
                         <span class="badge badge-info font-size-11 m-1" style="position: absolute; right: 15px; top: 15px;">孵化期</span>
                         <div class="mb-4">
-                            <img class="rounded-circle avatar-sm" :src="`${v.image}`" alt />
+                            <img class="rounded-circle avatar-sm" :src="`${item.image}`" alt />
                         </div>
                         <h5 class="font-size-15">
-                            <a href="javascript: void(0);" class="text-dark">{{ k }}</a>
+                            <a href="javascript: void(0);" class="text-dark">{{ item.name }}</a>
                         </h5>
-                        <p class="text-muted mb-1">{{ v.text }}</p>
+                        <p class="text-muted mb-1">{{ item.text }}</p>
                     </div>
                     <div class="card-footer bg-transparent border-top">
                         <div class="row mt-1">
                             <div class="col-6">
                                 <p class="text-muted mb-2">提交数</p>
-                                <h5 class="font-size-15 text-info" v-if="v.hasOwnProperty('data')">{{ v.data.commit.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!v.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.commits.length }}</h5>
+                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
                             </div>
                             <div class="col-6">
                                 <p class="text-muted mb-2">贡献者</p>
-                                <h5 class="font-size-15 text-info" v-if="v.hasOwnProperty('data')">{{ v.data.contributor.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!v.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.contributosr.length }}</h5>
+                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
                             </div>
                         </div>
                         <div class="row mt-3 mb-2">
                             <div class="col-6">
                                 <p class="text-muted mb-2">Issue</p>
-                                <h5 class="font-size-15 text-info" v-if="v.hasOwnProperty('data')">{{ v.data.issue.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!v.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.issue.length }}</h5>
+                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
                             </div>
                             <div class="col-6">
                                 <p class="text-muted mb-2">Pull Request</p>
-                                <h5 class="font-size-15 text-info" v-if="v.hasOwnProperty('data')">{{ v.data.pull_request.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!v.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.pull_requests.length }}</h5>
+                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
                             </div>
                         </div>
                     </div>
                 </div>
             </router-link>
         </div>
-        <!-- end col -->
     </div>
 </div>

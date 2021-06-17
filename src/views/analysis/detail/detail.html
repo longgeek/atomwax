@@ -8,7 +8,7 @@
                         <div class="col-12">
                             <div class="text-info p-3">
                                 <h4 class="text-info">{{ project }}</h4>
-                                <p class="mt-3">{{ projectData[project].text }}</p>
+                                <p class="mt-3">{{ projectData.text }}</p>
                             </div>
                             <a href class="btn btn-info btn-sm pull-right mr-4 mb-4" style="margin-top: -18px;">
                                 加入社区，为项目做出贡献
@@ -21,12 +21,12 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="avatar-xlg profile-user-wid mb-2">
-                                <img :src="projectData[project].image" alt class="img-thumbnail rounded-circle" />
+                                <img :src="projectData.detail.image" alt class="img-thumbnail rounded-circle" />
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <a href class=" btn-sm pull-right mt-5 mr-2">
-                                2020.09.10 进入孵化期
+                                {{ projectData.detail.join_time }} 进入孵化期
                                 <i class="mdi mdi-egg-easter ml-1"></i>
                             </a>
                         </div>
@@ -38,10 +38,10 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <p class="text-muted">本月</p>
-                            <h3>67 %</h3>
+                            <h3>xx %</h3>
                             <p class="text-muted">
                                 <span class="text-success mr-2">
-                                    12 %
+                                    xx %
                                     <i class="mdi mdi-arrow-up"></i>
                                 </span> 较上月增长
                             </p>
@@ -54,7 +54,6 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <!-- Chart -->
                             <apexchart
                                 class="apex-charts"
                                 type="radialBar"
@@ -69,20 +68,69 @@
                 </div>
             </div>
             <!-- end card -->
+
+            <router-link :to="{name: 'analysis-detail-language', query: {project: project}}"
+                v-if="Object.keys(projectData.cloc).length"
+            >
+                <div class="card hover">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">前 5 编程语言占比</h4>
+                        <div class="text-center">
+                            <div class="avatar-sm mx-auto mb-4">
+                                <span class="avatar-title rounded-circle bg-dark font-size-24">
+                                    <i class="mdi mdi-github-circle text-white"></i>
+                                </span>
+                            </div>
+                            <h5>
+                                <a href="javascript: void(0);" class="text-dark">
+                                    <b class="text-success">{{ projectData.cloc.SUM.nFiles }}</b>
+                                    <span class="text-muted font-16"> 文件数</span>
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="table-responsive mt-4">
+                            <table class="table table-centered" style="margin-top: -7px;">
+                                <tbody>
+                                    <tr
+                                        v-for="(v, k, index) in projectData.cloc" :key="index"
+                                        v-if="k != 'header' && k != 'SUM'"
+                                    >
+                                        <td style="width: 140px">
+                                            <p class="mb-0">{{ k }}</p>
+                                        </td>
+                                        <td style="width: 120px">
+                                            <span class="mb-0">{{ (v.nFiles / projectData.cloc.SUM.nFiles * 100).toFixed(1) }} %</span>
+                                        </td>
+                                        <td>
+                                            <b-progress
+                                                :value="parseInt(v.nFiles / projectData.cloc.SUM.nFiles * 100)"
+                                                variant="primary"
+                                                height="5px"
+                                            ></b-progress>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </router-link>
         </div>
         <div class="col-xl-8">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card mini-stats-wid">
                         <div class="card-body">
                             <div class="media">
                                 <div class="media-body">
                                     <p class="text-muted font-weight-medium">代码提交数</p>
-                                    <h4 class="mb-0">{{ projectData[project].data.commit.length }} 次</h4>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.commits }} 次
+                                    </h4>
                                 </div>
                                 <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
                                     <span class="avatar-title">
-                                        <i class="bx bx-git-commit font-size-24"></i>
+                                        <i class="mdi mdi-source-commit font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -90,14 +138,16 @@
                         <!-- end card-body -->
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <router-link :to="{name: 'analysis-detail-author', query: {project: project}}">
                         <div class="card mini-stats-wid hover">
                             <div class="card-body">
                                 <div class="media">
                                     <div class="media-body">
                                         <p class="text-muted font-weight-medium">项目贡献者</p>
-                                        <h4 class="mb-0">{{ projectData[project].data.contributor.length }} 名</h4>
+                                        <h4 class="mb-0">
+                                            {{ projectData.detail.contributors }} 名
+                                        </h4>
                                     </div>
                                     <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
                                         <span class="avatar-title">
@@ -109,17 +159,115 @@
                         </div>
                     </router-link>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card mini-stats-wid">
                         <div class="card-body">
                             <div class="media">
                                 <div class="media-body">
                                     <p class="text-muted font-weight-medium">代码行数</p>
-                                    <h4 class="mb-0">{{ projectData[project].data.cloc.language_sum.code }} 行</h4>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.line_of_code }}
+                                        行
+                                    </h4>
                                 </div>
                                 <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
                                     <span class="avatar-title">
                                         <i class="bx bx-code-alt font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p class="text-muted font-weight-medium">Star</p>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.star }}
+                                    </h4>
+                                </div>
+                                <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
+                                    <span class="avatar-title">
+                                        <i class="mdi mdi-star font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p class="text-muted font-weight-medium">Watch</p>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.watch }}
+                                    </h4>
+                                </div>
+                                <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
+                                    <span class="avatar-title">
+                                        <i class="mdi mdi-eye font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p class="text-muted font-weight-medium">Fork</p>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.fork }}
+                                    </h4>
+                                </div>
+                                <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
+                                    <span class="avatar-title">
+                                        <i class="mdi mdi-source-fork font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p class="text-muted font-weight-medium">Pulls</p>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.pull_requests }}
+                                    </h4>
+                                </div>
+                                <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
+                                    <span class="avatar-title">
+                                        <i class="mdi mdi-source-pull font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p class="text-muted font-weight-medium">Issue</p>
+                                    <h4 class="mb-0">
+                                        {{ projectData.detail.issue }}
+                                    </h4>
+                                </div>
+                                <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-info">
+                                    <span class="avatar-title">
+                                        <i class="mdi mdi-information-outline font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -159,58 +307,20 @@
                     ></apexchart>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- end row -->
-    <div class="row">
-        <div class="col-xl-4">
-            <router-link :to="{name: 'analysis-detail-language', query: {project: project}}">
-                <div class="card hover">
-                    <div class="card-body">
-                        <h4 class="card-title mb-4">前 5 编程语言占比</h4>
-                        <div class="text-center">
-                            <div class="avatar-sm mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-dark font-size-24">
-                                    <i class="mdi mdi-github-circle text-white"></i>
-                                </span>
-                            </div>
-                            <h5>
-                                <a href="javascript: void(0);" class="text-dark">
-                                    <b class="text-success">{{ projectData[project].data.cloc.files.total }} </b>
-                                    <span class="text-muted font-16">文件数</span>
-                                </a>
-                            </h5>
-                        </div>
-                        <div class="table-responsive mt-4">
-                            <table class="table table-centered" style="margin-top: -7px;">
-                                <tbody>
-                                    <tr v-for="(k, index) in Object.keys(projectData[project].data.cloc.language).slice(0, 4)" :key="index">
-                                        <td style="width: 140px">
-                                            <p class="mb-0">{{ k }}</p>
-                                        </td>
-                                        <td style="width: 120px">
-                                            <span class="mb-0">{{ (projectData[project].data.cloc.language[k].files / projectData[project].data.cloc.files.total * 100).toFixed(1) }} %</span>
-                                        </td>
-                                        <td>
-                                            <b-progress :value="parseInt(projectData[project].data.cloc.language[k].files / projectData[project].data.cloc.files.total * 100)" variant="primary" height="5px"></b-progress>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </router-link>
-        </div>
-        <div class="col-lg-4">
-            <router-link :to="{name: 'analysis-detail-author', query: {project: project}}">
+
+            <router-link :to="{name: 'analysis-detail-author', query: {project: project}}"
+                v-if="
+                    projectData.hasOwnProperty('contributors') &&
+                    projectData.contributors.length
+                "
+            >
                 <div class="card hover">
                     <div class="card-body">
                         <h4 class="card-title mb-4">前 5 名贡献者</h4>
                         <div class="table-responsive">
                             <table class="table table-centered">
                                 <tbody>
-                                    <tr v-for="(v, index) in projectData[project].data.contributor.slice(0, 5)" :key="index">
+                                    <tr v-for="(v, index) in projectData.contributors.slice(0, 5)" :key="index">
                                         <td style="width: 50px;">
                                             <div class="avatar-xs">
                                                 <span
@@ -238,11 +348,8 @@
                     </div>
                 </div>
             </router-link>
-        </div>
-        <!-- end col -->
-        <!-- end col -->
-        <div class="col-xl-4">
-            <div class="card">
+
+            <!-- div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-4">社区关注度</h4>
                     <div class="text-center">
@@ -267,7 +374,7 @@
                                         <i class="bx bx-git-repo-forked text-color"></i>
                                     </span>
                                 </div>
-                                <p class="mb-0">125 <span class="text-muted">forks</span></p>
+                                <p class="mb-0">{{ projectData.detail.fork }} <span class="text-muted">fork</span></p>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -277,7 +384,7 @@
                                         <i class="bx bxs-star text-color"></i>
                                     </span>
                                 </div>
-                                <p class="mb-0">112 <span class="text-muted">stars</span></p>
+                                <p class="mb-0">{{ projectData.detail.star }} <span class="text-muted">star</span></p>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -287,14 +394,12 @@
                                         <i class="bx bx-info-circle text-color"></i>
                                     </span>
                                 </div>
-                                <p class="mb-0">{{ projectData[project].data.issue.length }} <span class="text-muted">issue</span></p>
+                                <p class="mb-0">{{ projectData.detail.issue }} <span class="text-muted">issue</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div -->
         </div>
-        <!-- end col -->
     </div>
-    <!-- end row -->
 </div>

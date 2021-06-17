@@ -2,8 +2,6 @@ import appConfig from "@/app.config";
 import PageHeader from "@/components/page-header";
 import PageIntroduction from "@/components/page-introduction";
 
-import { projectData } from "./data-projects";
-
 /**
  * Starter component
  */
@@ -15,7 +13,7 @@ export default {
     components: { PageHeader, PageIntroduction },
     data() {
         return {
-            projectData: projectData,
+            projects: [],
             page_title: "",
             page_items: [ { text: "健康分析" } ],
             page_icon_class: "mdi mdi-chart-donut-variant",
@@ -23,5 +21,8 @@ export default {
             page_intro_content: '开源项目的健康分析，从代码提交、Issue、拉取次数、贡献者等纬度衡量项目的健康程度。'
         };
     },
-    methods: {}
+    methods: {},
+    created() {
+        this.API.call({action: "Project:List"}).then(rsp => { this.projects = rsp.data.data; })
+    },
 };

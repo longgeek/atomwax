@@ -25,5 +25,13 @@ module.exports = {
         open: false,                                // 配置后自动启动浏览器
         hotOnly: true,                              // 热更新
         contentBase:path.join(__dirname, 'public'),
+        proxy: {
+            "/api": {
+                target: "http://127.0.0.1:8000",
+                changeOrigin: true,
+                ws: true,
+                secure: false,
+            },
+        }
     },
 }

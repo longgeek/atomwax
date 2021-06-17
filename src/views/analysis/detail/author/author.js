@@ -1,9 +1,6 @@
 import appConfig from "@/app.config";
 import PageHeader from "@/components/page-header";
 
-
-import { projectData } from "../../data-projects";
-
 /**
  * Analysis Detail
  */
@@ -15,12 +12,15 @@ export default {
     components: { PageHeader },
     created() {
         this.project = this.$route.query.project;
-        this.init();
+        this.API.call({action: "Project:Detail", params: {project: this.project}}).then(rsp => { this.projectData = rsp.data.data; this.init(); })
     },
     data() {
         return {
+            authors: [],
             project: '',
-            projectData: projectData,
+            projectData: {
+                detail: {},
+            },
             page_title: "",
             page_items: [
                 { text: "健康分析", to: {name: "analysis"} },
@@ -33,7 +33,7 @@ export default {
     methods: {
         init() {
             // 针对贡献者数据结构重新定义
-            let contributor = projectData[this.project].data.contributor;
+            let contributor = this.projectData.contributors;
             this.authors = [];
             this.authorsInfo = {};
 
@@ -50,7 +50,7 @@ export default {
             }
 
             // 遍历 Commit 数据，对应到贡献者上
-            let commit = projectData[this.project].data.commit;
+            let commit = this.projectData.commits;
 
             for (let i in commit) {
                 for (let f in commit[i].files) {

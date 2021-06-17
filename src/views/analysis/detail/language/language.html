@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">编程语言分布<span class="text-muted">（{{ Object.keys(projectData[project].data.cloc.language).length }} 种）</span></h4>
+                    <h4 class="card-title mb-4">编程语言分布<span class="text-muted">（{{ Object.keys(projectData.cloc).length - 2 }} 种）</span></h4>
                     <div class="table-responsive">
                         <table class="table table-centered">
                             <thead>
@@ -20,21 +20,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(k, index) in Object.keys(projectData[project].data.cloc.language)" :key="index">
+                                <tr v-for="(v, k, index) in projectData.cloc" :key="index"
+                                    v-if="k != 'header' && k != 'SUM'"
+                                >
                                     <td class="text-muted" style="width: 50px;">{{ index + 1 }}</td>
                                     <td style="width: 100px">
                                         <div class="badge badge-info">{{ k }}</div>
                                     </td>
                                     <td style="width: 120px">
                                         <span class="mb-0">
-                                            {{ (projectData[project].data.cloc.language[k].files / projectData[project].data.cloc.files.total * 100).toFixed(1) }} %
-                                            <b-progress :value="parseInt(projectData[project].data.cloc.language[k].files / projectData[project].data.cloc.files.total * 100)" variant="primary" height="5px"></b-progress>
+                                            {{ (v.nFiles / projectData.cloc.SUM.nFiles * 100).toFixed(1) }} %
+                                            <b-progress
+                                                :value="parseInt(v.nFiles / projectData.cloc.SUM.nFiles * 100)"
+                                                variant="primary"
+                                                height="5px"
+                                            ></b-progress>
                                         </span>
                                     </td>
-                                    <td style="width: 50px;">{{ projectData[project].data.cloc.language[k].files }}</td>
-                                    <td style="width: 50px;">{{ projectData[project].data.cloc.language[k].blank }}</td>
-                                    <td style="width: 50px;">{{ projectData[project].data.cloc.language[k].commant }}</td>
-                                    <td style="width: 50px;">{{ projectData[project].data.cloc.language[k].code }}</td>
+                                    <td style="width: 50px;">{{ v.nFiles }}</td>
+                                    <td style="width: 50px;">{{ v.blank }}</td>
+                                    <td style="width: 50px;">{{ v.comment }}</td>
+                                    <td style="width: 50px;">{{ v.code }}</td>
                                 </tr>
                             </tbody>
                         </table>
