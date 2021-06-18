@@ -21,6 +21,7 @@ export default {
             projectData: {
                 detail: {},
                 cloc: {},
+                commits: [],
             },
             project: '',
             page_title: "",
