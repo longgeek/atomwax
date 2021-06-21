@@ -3,11 +3,10 @@ import router from "@/router";
 
 import NavBar from "@/components/nav-bar";
 import SideBar from "@/components/side-bar";
-import RightBar from "@/components/right-bar";
 // import Footer from "@/components/footer";
 
 export default {
-    components: { NavBar, SideBar, RightBar },
+    components: { NavBar, SideBar },
     data() {
         return {
             isMenuCondensed: false
@@ -65,6 +64,5 @@ export default {
             </div>
             <!-- Footer / -->
         </div>
-        <RightBar />
     </div>
 </template>

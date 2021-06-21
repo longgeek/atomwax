@@ -1,5 +1,3 @@
-import store from '@/state/store'
-
 export default [
     {
         path: '/',
@@ -28,22 +26,5 @@ export default [
         name: 'analysis-detail-language',
         meta: { authRequired: false },
         component: () => import('@/views/analysis/detail/language/language.vue'),
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: () => import('@/views/account/login'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                // If the user is already logged in
-                if (store.getters['auth/loggedIn']) {
-                    // Redirect to the home page instead
-                    next({ name: 'home' })
-                } else {
-                    // Continue to the login page
-                    next()
-                }
-            },
-        },
     },
 ]

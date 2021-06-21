@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">编程语言分布<span class="text-muted">（{{ Object.keys(projectData.cloc).length - 2 }} 种）</span></h4>
+                    <h4 class="card-title mb-4">编程语言分布<span class="text-muted">（{{ Object.keys(projectData).length - 2 }} 种）</span></h4>
                     <div class="table-responsive">
                         <table class="table table-centered">
                             <thead>
@@ -20,7 +20,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(v, k, index) in projectData.cloc" :key="index"
+                                <tr v-for="(v, k, index) in projectData" :key="index"
                                     v-if="k != 'header' && k != 'SUM'"
                                 >
                                     <td class="text-muted" style="width: 50px;">{{ index + 1 }}</td>
@@ -29,9 +29,9 @@
                                     </td>
                                     <td style="width: 120px">
                                         <span class="mb-0">
-                                            {{ (v.nFiles / projectData.cloc.SUM.nFiles * 100).toFixed(1) }} %
+                                            {{ (v.nFiles / projectData.SUM.nFiles * 100).toFixed(1) }} %
                                             <b-progress
-                                                :value="parseInt(v.nFiles / projectData.cloc.SUM.nFiles * 100)"
+                                                :value="parseInt(v.nFiles / projectData.SUM.nFiles * 100)"
                                                 variant="primary"
                                                 height="5px"
                                             ></b-progress>

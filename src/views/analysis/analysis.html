@@ -19,25 +19,25 @@
                         <div class="row mt-1">
                             <div class="col-6">
                                 <p class="text-muted mb-2">提交数</p>
-                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.commits.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.commits">{{ item.commits }}</h5>
+                                <h5 class="font-size-15 text-muted" v-else>-</h5>
                             </div>
                             <div class="col-6">
                                 <p class="text-muted mb-2">贡献者</p>
-                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.contributosr.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.contributors">{{ item.contributors }}</h5>
+                                <h5 class="font-size-15 text-muted" v-else>-</h5>
                             </div>
                         </div>
                         <div class="row mt-3 mb-2">
                             <div class="col-6">
                                 <p class="text-muted mb-2">Issue</p>
-                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.issue.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.issue">{{ item.issue }}</h5>
+                                <h5 class="font-size-15 text-muted" v-else>-</h5>
                             </div>
                             <div class="col-6">
                                 <p class="text-muted mb-2">Pull Request</p>
-                                <h5 class="font-size-15 text-info" v-if="item.hasOwnProperty('data')">{{ item.data.pull_requests.length }}</h5>
-                                <h5 class="font-size-15 text-muted" v-if="!item.hasOwnProperty('data')">-</h5>
+                                <h5 class="font-size-15 text-info" v-if="item.pull_requests">{{ item.pull_requests }}</h5>
+                                <h5 class="font-size-15 text-muted" v-else>-</h5>
                             </div>
                         </div>
                     </div>

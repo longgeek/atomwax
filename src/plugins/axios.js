@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/state/store'
 
 // Axios Config
-axios.defaults.timeout = 109000;
+axios.defaults.timeout = 10900000;
 axios.defaults.baseURL = process.env.VUE_APP_BASEURL;
 
 // http request 拦截器

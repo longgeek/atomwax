@@ -1,11 +1,10 @@
 <div class="analysis-detail-page">
     <PageHeader :title="page_title" :items="page_items" />
     <div class="row">
-        <!-- end col -->
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">贡献者排名<span class="text-muted">（{{ authors.length }} 名贡献者，进行了 {{ projectData.detail.commits }} 次代码提交）</span></h4>
+                    <h4 class="card-title mb-4">贡献者排名<span class="text-muted">（{{ authors.length }} 名贡献者，进行了 {{ projectData.commits }} 次代码提交）</span></h4>
                     <div class="table-responsive">
                         <table class="table table-centered">
                             <thead>
@@ -13,8 +12,6 @@
                                     <th>#</th>
                                     <th>贡献者</th>
                                     <th>邮箱</th>
-                                    <th>添加代码行</th>
-                                    <th>删除代码行</th>
                                     <th>提交次数</th>
                                     <th>最后提交于</th>
                                 </tr>
@@ -27,36 +24,23 @@
                                     <td>
                                         <div class="avatar-xs mr-3 inline-block">
                                             <span class="avatar-title rounded-circle bg-soft-info text-info font-size-16">
-                                                {{ v[0] }}
+                                                {{ v[0].split("<")[0][0] }}
                                             </span>
                                         </div>
                                         <span class="badge badge-info">
-                                            {{ v.split('<')[0] }}
+                                            {{ v[0].split("<")[0] }}
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="text-muted">{{ v.split('<')[1].replace('>', '') }}</span>
+                                        <span class="text-muted">{{ v[0].split('<')[1].split('>')[0] }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-info font-size-11 ml-1">{{ v[1] }}</span>
                                     </td>
                                     <td>
                                         <h5 class="font-size-12 m-0">
-                                            <span class="text-dark">{{ authorsInfo[v].added }}</span>
-                                        </h5>
-                                    </td>
-                                    <td>
-                                        <h5 class="font-size-12 m-0">
-                                            <span class="text-dark">{{ authorsInfo[v].removed }}</span>
-                                        </h5>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span class="text-info font-size-11 ml-1">
-                                                {{ authorsInfo[v].commit }}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h5 class="font-size-12 m-0">
-                                            {{ authorsInfo[v].commitDate[authorsInfo[v].commitDate.length-1] }}
+                                            <span v-if="v.length == 3">{{ v[2] }}</span>
+                                            <span v-else>-</span>
                                         </h5>
                                     </td>
                                 </tr>
@@ -66,7 +50,5 @@
                 </div>
             </div>
         </div>
-        <!-- end col -->
     </div>
-    <!-- end row -->
 </div>

@@ -1,8 +1,6 @@
 import appConfig from "@/app.config";
 import PageHeader from "@/components/page-header";
 
-import Emailsent from "@/components/widgets/emailsent";
-
 /**
  * Analysis Detail
  */
@@ -11,15 +9,70 @@ export default {
         title: "",
         meta: [{ name: "description", content: appConfig.description }]
     },
-    components: { PageHeader, Emailsent },
+    components: { PageHeader },
     created() {
         this.project = this.$route.query.project;
-        this.API.call({action: "Project:Detail", params: {project: this.project}}).then(rsp => { this.projectData = rsp.data.data; this.init(); })
+
+        // 1. project detail
+        this.API.call(
+            { action: "Project:Detail", params: {project: this.project}}
+        ).then( rsp => {
+            this.projectData.detail = rsp.data.data;
+        })
+
+        // 2. cloc
+        this.API.call(
+            { action: "Project:DetailCloc", params: {project: this.project}}
+        ).then( rsp => {
+            this.projectData.cloc = rsp.data.data;
+        })
+
+        // 3. contributors
+        this.API.call(
+            { action: "Project:DetailContributors", params: {project: this.project}}
+        ).then( rsp => {
+            this.projectData.contributors = rsp.data.data;
+        })
+
+        // 4. 获取 pull request 数据
+        this.API.call(
+            {
+                action: "Project:DetailPullRequestsChart",
+                params: {project: this.project}
+            }
+        ).then( rsp => {
+            this.yearData.pull_request = rsp.data.data;
+            this.genChartYears(rsp.data.data);
+        })
+
+        // 4. 获取 issue 数据
+        this.API.call(
+            {
+                action: "Project:DetailIssueChart",
+                params: {project: this.project}
+            }
+        ).then( rsp => {
+            this.yearData.issue = rsp.data.data;
+            this.genChartYears(rsp.data.data);
+        })
+
+        // 5. commits
+        this.API.call(
+            {
+                action: "Project:DetailCommitsChart",
+                params: {project: this.project}
+            }
+        ).then( rsp => {
+            this.yearData.commit = rsp.data.data;
+            this.genChartYears(rsp.data.data);
+        })
     },
     data() {
         return {
             projectData: {
-                detail: {},
+                detail: {
+                    image: "",
+                },
                 cloc: {},
                 commits: [],
             },
@@ -30,6 +83,7 @@ export default {
                 { text: this.$route.query.project },
             ],
             title: "Dashboard",
+            chartYears: [],
             chartOptions: {
                 chart: {
                     offsetY: -10
@@ -133,91 +187,39 @@ export default {
             },
             year: 2021,
             yearData: {
-                commit: {
-                    2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                    2020: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                    2021: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                },
-                issue: {
-                    2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                    2020: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                    2021: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                },
-                pull_request: {
-                    2019: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                    2020: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                    2021: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0},
-                }
+                commit: {},
+                issue: {},
+                pull_request: {}
             }
         };
     },
     methods: {
-        init() {
-            // 1. 获取 commit 数据
-            let commit = this.projectData.commits;
-            for (let i in commit) {
-                let commitYear;
-                let commitMonth;
-
-                if (commit[i].hasOwnProperty('CommitData')) {
-                    commitYear = new Date(commit[i].CommitDate).getUTCFullYear();
-                    commitMonth = new Date(commit[i].CommitDate).getMonth();
-                } else {
-                    commitYear = new Date(commit[i].data.CommitDate).getUTCFullYear();
-                    commitMonth = new Date(commit[i].data.CommitDate).getMonth();
-                }
-                if (commitYear == 2019) this.yearData.commit[2019][commitMonth] += 1;
-                if (commitYear == 2020) this.yearData.commit[2020][commitMonth] += 1;
-                if (commitYear == 2021) this.yearData.commit[2021][commitMonth] += 1;
-            }
-
-            // 2. 获取 issue 数据
-            let issue = this.projectData.issue;
-            for (let i in issue) {
-                let issueYear;
-                let issueMonth;
-
-                if (issue[i].hasOwnProperty('data')) {
-                    issueYear = new Date(issue[i].data.created_at).getUTCFullYear();
-                    issueMonth = new Date(issue[i].data.created_at).getMonth();
-                } else {
-                    issueYear = new Date(issue[i].created_at).getUTCFullYear();
-                    issueMonth = new Date(issue[i].created_at).getMonth();
-                }
-                if (issueYear == 2019) this.yearData.issue[2019][issueMonth] += 1;
-                if (issueYear == 2020) this.yearData.issue[2020][issueMonth] += 1;
-                if (issueYear == 2021) this.yearData.issue[2021][issueMonth] += 1;
-            }
-
-
-            // 3. 获取 pull request 数据
-            let pull_request = this.projectData.pull_requests;
-            for (let i in pull_request) {
-                let requestYear = new Date(pull_request[i].data.created_at).getUTCFullYear();
-                let requestMonth = new Date(pull_request[i].data.created_at).getMonth();
-                if (requestYear == 2019) this.yearData.pull_request[2019][requestMonth] += 1;
-                if (requestYear == 2020) this.yearData.pull_request[2020][requestMonth] += 1;
-                if (requestYear == 2021) this.yearData.pull_request[2021][requestMonth] += 1;
-            }
-
-            this.changeYear(this.year);
-        },
-        changeYear(year){
+        changeYear(year) {
             this.year = year;
             this.series1 = [
                 {
                     name: "Commit 数",
-                    data: Object.values(this.yearData.commit[this.year]),
+                    data: this.yearData.commit[this.year] ? Object.values(this.yearData.commit[this.year]) : [],
                 },
                 {
                     name: "Issue 数",
-                    data: Object.values(this.yearData.issue[this.year]),
+                    data: this.yearData.issue[this.year] ? Object.values(this.yearData.issue[this.year]) : [],
                 },
                 {
                     name: "Pull Request",
-                    data: Object.values(this.yearData.pull_request[this.year]),
+                    data: this.yearData.pull_request[this.year] ? Object.values(this.yearData.pull_request[this.year]) : [],
                 }
             ];
         },
-    }
+        genChartYears(data) {
+            for (let i in Object.keys(data)) {
+                let year = Object.keys(data)[i];
+                if (this.chartYears.indexOf(year) == -1) {
+                    this.chartYears.push(year);
+                }
+            }
+            this.chartYears.sort();
+            this.changeYear(this.year);
+        }
+    },
 };

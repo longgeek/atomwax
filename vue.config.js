@@ -26,11 +26,14 @@ module.exports = {
         hotOnly: true,                              // 热更新
         contentBase:path.join(__dirname, 'public'),
         proxy: {
-            "/api": {
-                target: "http://127.0.0.1:8000",
+            "/atomwax_api": {
+                target: "http://127.0.0.1:9000",
                 changeOrigin: true,
                 ws: true,
                 secure: false,
+                pathRewrite: {
+                    "^/atomwax_api": "",
+                }
             },
         }
     },

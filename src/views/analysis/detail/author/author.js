@@ -12,15 +12,26 @@ export default {
     components: { PageHeader },
     created() {
         this.project = this.$route.query.project;
-        this.API.call({action: "Project:Detail", params: {project: this.project}}).then(rsp => { this.projectData = rsp.data.data; this.init(); })
+
+        // 1. project detail
+        this.API.call(
+            { action: "Project:Detail", params: {project: this.project}}
+        ).then( rsp => {
+            this.projectData = rsp.data.data;
+        })
+
+        // 2. contributors
+        this.API.call(
+            { action: "Project:DetailContributors", params: {project: this.project}}
+        ).then( rsp => {
+            this.authors = rsp.data.data;
+        })
     },
     data() {
         return {
             authors: [],
             project: '',
-            projectData: {
-                detail: {},
-            },
+            projectData: {},
             page_title: "",
             page_items: [
                 { text: "健康分析", to: {name: "analysis"} },
@@ -30,42 +41,15 @@ export default {
             title: "Dashboard",
         };
     },
-    methods: {
-        init() {
-            // 针对贡献者数据结构重新定义
-            let contributor = this.projectData.contributors;
-            this.authors = [];
-            this.authorsInfo = {};
-
-            for (let idx in contributor) {
-                let name = contributor[idx][0];
-                let nums = contributor[idx][1];
-                this.authors.push(name);
-                this.authorsInfo[name] = {
-                    commit: nums,
-                    added: 0,
-                    removed: 0,
-                    commitDate: [],
-                };
-            }
-
-            // 遍历 Commit 数据，对应到贡献者上
-            let commit = this.projectData.commits;
-
-            for (let i in commit) {
-                for (let f in commit[i].files) {
-                    if (commit[i].files[f].added && commit[i].files[f].added !== '-') {
-                        this.authorsInfo[commit[i].Author].added += Number(commit[i].files[f].added);
-                    }
-                    if (commit[i].files[f].removed && commit[i].files[f].removed !== '-') {
-                        this.authorsInfo[commit[i].Author].removed += Number(commit[i].files[f].removed);
-                    }
-                }
-                // 用户所有提交时间
-                this.authorsInfo[commit[i].Author].commitDate.push((new Date(commit[i].CommitDate)).toLocaleString());
-            }
-
-            console.log('end: ', this.authorsInfo);
-        }
-    }
 };
+
+
+
+
+
+
+
+
+
+
+

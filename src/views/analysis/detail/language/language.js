@@ -12,15 +12,16 @@ export default {
     components: { PageHeader },
     created() {
         this.project = this.$route.query.project;
-        this.API.call({action: "Project:Detail", params: {project: this.project}}).then(rsp => { this.projectData = rsp.data.data; })
+        this.API.call(
+            { action: "Project:DetailCloc", params: {project: this.project}}
+        ).then( rsp => {
+            this.projectData = rsp.data.data;
+        })
     },
     data() {
         return {
             project: '',
-            projectData: {
-                detail: {},
-                cloc: {},
-            },
+            projectData: {},
             page_title: "",
             page_items: [
                 { text: "健康分析", to: {name: "analysis"} },
@@ -32,3 +33,6 @@ export default {
     },
     methods: {}
 };
+
+
+

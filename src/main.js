@@ -1,8 +1,6 @@
 import Vue from 'vue'
-import marked from 'marked'
 import moment from 'moment'
 import BootstrapVue from 'bootstrap-vue'
-import Vuelidate from 'vuelidate'
 import VueMask from 'v-mask'
 import VueRouter from 'vue-router'
 import vco from "v-click-outside"
@@ -10,17 +8,6 @@ import router from './router/index'
 
 import api from '@/api.js'
 import config from '@/config.js'
-import columns from '@/columns.js'
-
-// ant-design-vue
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
-
-// element-ui
-import { Tree } from 'element-ui'
-import '@/design/theme-et/tree.css'
-import '@/design/theme-et/icon.css'
-Vue.use(Tree)
 
 import "@/design/index.scss";
 import store from '@/state/store'
@@ -29,18 +16,12 @@ import App from './App.vue'
 
 import axios from '@/plugins/axios'
 import VueAxios from 'vue-axios'
-import VueCookie from 'vue-cookie'
 
 import VueApexCharts from 'vue-apexcharts'
 Vue.component('apexchart', VueApexCharts)
 
-import animated from 'animate.css'
-Vue.use(animated)
-
-Vue.use(VueCookie);
 Vue.use(VueAxios, axios)
 
-Vue.use(Antd)
 Vue.use(VueRouter)
 
 const VueRouterPush = VueRouter.prototype.push
@@ -53,14 +34,12 @@ Vue.use(vco)
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
-Vue.use(Vuelidate)
 Vue.use(VueMask)
 
 Vue.prototype.LOGIN = () => window.location.href = process.env.VUE_APP_LOGIN + '?next_url=' + window.location.href;
 Vue.prototype.LOGOUT = () => window.location.href = process.env.VUE_APP_LOGOUT;
 Vue.prototype.API = api
 Vue.prototype.CONF = config
-Vue.prototype.COLS = columns
 Vue.prototype.USER = {}
 
 
@@ -248,15 +227,6 @@ Vue.filter("toLocalTime", function (time) {
     return moment(localtime).format('YYYY-MM-DD HH:mm:ss');
 })
 
-
-/**
- * toMarkDown
- * convert string to the markdown format
- */
-Vue.filter("toMarkDown", function (content) {
-    if (!content) { return; }
-    return marked(content);
-})
 
 
 /**
