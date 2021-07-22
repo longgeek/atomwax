@@ -20,6 +20,14 @@ import VueAxios from 'vue-axios'
 import VueApexCharts from 'vue-apexcharts'
 Vue.component('apexchart', VueApexCharts)
 
+import { Table, Pagination } from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.min.css';
+import { ConfigProvider } from 'ant-design-vue';
+
+Vue.component(ConfigProvider.name, ConfigProvider);
+Vue.use(Table);
+Vue.use(Pagination);
+
 Vue.use(VueAxios, axios)
 
 Vue.use(VueRouter)

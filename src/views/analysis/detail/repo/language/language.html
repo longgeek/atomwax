@@ -1,0 +1,54 @@
+<div class="analysis-detail-page">
+    <PageHeader :title="page_title" :items="page_items" />
+    <div class="row">
+        <!-- end col -->
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">编程语言分布<span class="text-muted">（{{ Object.keys(projectData).length - 2 }} 种）</span></h4>
+                    <div class="table-responsive">
+                        <table class="table table-centered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>编程语言 </th>
+                                    <th>占比</th>
+                                    <th>文件数</th>
+                                    <th>空白行</th>
+                                    <th>注释</th>
+                                    <th>代码</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(v, k, index) in projectData" :key="index"
+                                    v-if="k != 'header' && k != 'SUM'"
+                                >
+                                    <td class="text-muted" style="width: 50px;">{{ index + 1 }}</td>
+                                    <td style="width: 100px">
+                                        <div class="badge badge-info">{{ k }}</div>
+                                    </td>
+                                    <td style="width: 120px">
+                                        <span class="mb-0">
+                                            {{ (v.nFiles / projectData.SUM.nFiles * 100).toFixed(1) }} %
+                                            <b-progress
+                                                :value="parseInt(v.nFiles / projectData.SUM.nFiles * 100)"
+                                                variant="primary"
+                                                height="5px"
+                                            ></b-progress>
+                                        </span>
+                                    </td>
+                                    <td style="width: 50px;">{{ v.nFiles }}</td>
+                                    <td style="width: 50px;">{{ v.blank }}</td>
+                                    <td style="width: 50px;">{{ v.comment }}</td>
+                                    <td style="width: 50px;">{{ v.code }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+</div>

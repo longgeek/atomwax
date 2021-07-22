@@ -7,75 +7,18 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="text-info p-3">
-                                <h4 class="text-info">{{ project }}</h4>
-                                <p class="mt-3">{{ projectData.detail.description }}</p>
-                                <a class="mt-3 small" :href="projectData.detail.repo" target="_blank"
-                                    v-if="projectData.detail.repo"
-                                >
-                                    {{ projectData.detail.repo }}
-                                </a>
-                            </div>
-                            <a href class="btn btn-info btn-sm pull-right mt-2 mr-4 mb-4">
-                                加入社区，为项目做出贡献
-                                <i class="mdi mdi-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pt-0" style="border-bottom: 1px solid #eee;">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="avatar-xlg profile-user-wid mb-2" style="margin-top: -50px;">
-                                <img :src="`${projectData.detail.image}`" v-if="projectData.detail.image" alt class="img-thumbnail rounded-circle" />
-                                <img v-else alt class="img-thumbnail rounded-circle" />
+                                <h4 class="text-info">{{ repo }}</h4>
+                                <p class="mt-3 mb-2">
+                                    <a :href="projectData.detail.repo" target="_blank">{{ projectData.detail.repo }}</a>
+                                </p>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <a href class=" btn-sm pull-right mt-4 mr-2">
-                                {{ projectData.detail.join_time }} 进入孵化期
-                                <i class="mdi mdi-egg-easter ml-1"></i>
-                            </a>
-                        </div>
                     </div>
-                </div>
-                <!-- end card-body -->
-                <div class="card-body">
-                    <h4 class="card-title mb-4">综合健康比</h4>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p class="text-muted">本月</p>
-                            <h3>xx %</h3>
-                            <p class="text-muted">
-                                <span class="text-success mr-2">
-                                    xx %
-                                    <i class="mdi mdi-arrow-up"></i>
-                                </span> 较上月增长
-                            </p>
-
-                            <div class="mt-4">
-                                <a href="javascript: void(0);" class="btn btn-info btn-sm">
-                                    查看健康比分析纬度
-                                    <i class="mdi mdi-arrow-right ml-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <apexchart
-                                class="apex-charts"
-                                type="radialBar"
-                                height="250"
-                                dir="ltr"
-                                :series="series"
-                                :options="chartOptions"
-                            ></apexchart>
-                        </div>
-                    </div>
-                    <p class="text-muted text-center mb-0">该百分比需通过项目各方纬度数据进行考量，具体指标还需后期讨论</p>
                 </div>
             </div>
             <!-- end card -->
 
-            <router-link :to="{name: 'analysis-detail-language', query: {project: project}}"
+            <router-link :to="{name: 'analysis-detail-repo-language', query: {project: project, repo: repo}}"
                 v-if="Object.keys(projectData.cloc).length"
             >
                 <div class="card hover">
@@ -145,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-md-3" v-if="projectData.detail.contributors">
-                    <router-link :to="{name: 'analysis-detail-author', query: {project: project}}">
+                    <router-link :to="{name: 'analysis-detail-repo-author', query: {project: project, repo: repo}}">
                         <div class="card mini-stats-wid hover">
                             <div class="card-body">
                                 <div class="media">
@@ -324,34 +267,7 @@
                 </div>
             </div>
 
-            <div class="card" v-if="projectData.detail.hasOwnProperty('org')">
-                <div class="card-body">
-                    <h4 class="card-title mb-4">
-                        {{ projectData.repos.length }} 个仓库
-                    </h4>
-                    <div class="table-responsive">
-                        <a-table
-                            class="text-norwap"
-                            :scroll="{ x: true }"
-                            :columns="cols"
-                            :dataSource="projectData.repos"
-                            :pagination="pagination"
-                            :rowKey="records => records.index"
-                        >
-                            <template slot="index" slot-scope="index">
-                                <span class="text-muted">{{ index + 1 }}</span>
-                            </template>
-                            <template slot="name" slot-scope="name">
-                                <router-link :to="{name: 'analysis-detail-repo', query: {project: project, repo: name}}">
-                                    <b>{{ name }}</b>
-                                </router-link>
-                            </template>
-                        </a-table>
-                    </div>
-                </div>
-            </div>
-
-            <router-link :to="{name: 'analysis-detail-author', query: {project: project}}"
+            <router-link :to="{name: 'analysis-detail-repo-author', query: {project: project, repo: repo}}"
                 v-if="
                     projectData.hasOwnProperty('contributors') &&
                     projectData.contributors.length

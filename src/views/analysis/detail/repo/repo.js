@@ -5,29 +5,6 @@ import PageHeader from "@/components/page-header";
  * Analysis Detail
  */
 
-const cols = {
-    index: { title: '#', sorter: false },
-    name: { title: '项目名称', sorter: (a, b) => a.name.length - b.name.length },
-    star: { title: 'Star', sorter: (a, b) => a.star - b.star },
-    watch: { title: 'Watch', sorter: (a, b) => a.watch - b.watch },
-    fork: { title: 'Fork', sorter: (a, b) => a.fork - b.fork },
-    commits: { title: 'Commits', sorter: (a, b) => a.commits - b.commits },
-    issue: { title: 'Issue', sorter: (a, b) => a.issue - b.issue },
-    pull_requests: { title: 'PR', sorter: (a, b) => a.pull_requests - b.pull_requests },
-    contributors: { title: '贡献者', sorter: (a, b) => a.contributors - b.contributors },
-    line_of_code: { title: '代码行数', sorter: (a, b) => a.line_of_code - b.line_of_code },
-}
-
-const pagination = {
-    total: 0,
-    page: 1,
-    pageSize: 10,
-    showSizeChanger: true,
-    showQuickJumper: false,
-    pageSizeOptions: ['10', '20', '50', '100'],
-    showTotal: total => `合计: ${total} 条`,
-}
-
 export default {
     page: {
         title: "",
@@ -35,54 +12,26 @@ export default {
     },
     components: { PageHeader },
     created() {
+        this.repo = this.$route.query.repo;
         this.project = this.$route.query.project;
-
-        // 生成 table column
-        for ( const field in cols ) {
-            const set = cols[field];
-            const col = {
-                ellipsis: true,
-                title: set.title,
-                sorter: set.hasOwnProperty('sorter') ? set.sorter : true,
-                fixed: set.hasOwnProperty('fixed') ? set.fixed : false,
-                dataIndex: set.dataIndex || field,
-                scopedSlots: set.scopedSlots || { customRender: field },
-            };
-            this.cols.push(col);
-        }
 
         // 1. project detail
         this.API.call(
-            { action: "Project:Detail", params: {project: this.project}}
+            { action: "Project:DetailRepo", params: {project: this.project, repo: this.repo}}
         ).then( rsp => {
             this.projectData.detail = rsp.data.data;
-            // 如果是 org 则获取所有项目列表
-            if (this.projectData.detail.hasOwnProperty('org') && this.projectData.detail.org) {
-                this.API.call(
-                    { action: "Project:DetailProjectList", params: {project: this.project}}
-                ).then( rsp => {
-                    this.projectData.repos = rsp.data.data;
-                    const repos = [];
-                    for (let i in rsp.data.data) {
-                        let obj = rsp.data.data[i];
-                        obj.index = parseInt(i);
-                        repos.push(obj);
-                    }
-                    this.projectData.repos = repos;
-                })
-            }
         })
 
         // 2. cloc
         this.API.call(
-            { action: "Project:DetailCloc", params: {project: this.project}}
+            { action: "Project:DetailCloc", params: {project: this.repo}}
         ).then( rsp => {
             this.projectData.cloc = rsp.data.data;
         })
 
         // 3. contributors
         this.API.call(
-            { action: "Project:DetailContributors", params: {project: this.project}}
+            { action: "Project:DetailContributors", params: {project: this.repo}}
         ).then( rsp => {
             this.projectData.contributors = rsp.data.data;
         })
@@ -91,7 +40,7 @@ export default {
         this.API.call(
             {
                 action: "Project:DetailPullRequestsChart",
-                params: {project: this.project}
+                params: {project: this.repo}
             }
         ).then( rsp => {
             this.yearData.pull_request = rsp.data.data;
@@ -102,7 +51,7 @@ export default {
         this.API.call(
             {
                 action: "Project:DetailIssueChart",
-                params: {project: this.project}
+                params: {project: this.repo}
             }
         ).then( rsp => {
             this.yearData.issue = rsp.data.data;
@@ -113,7 +62,7 @@ export default {
         this.API.call(
             {
                 action: "Project:DetailCommitsChart",
-                params: {project: this.project}
+                params: {project: this.repo}
             }
         ).then( rsp => {
             this.yearData.commit = rsp.data.data;
@@ -122,8 +71,6 @@ export default {
     },
     data() {
         return {
-            cols: [],
-            pagination: pagination,
             projectData: {
                 detail: {
                     image: "",
@@ -136,7 +83,8 @@ export default {
             page_title: "",
             page_items: [
                 { text: "健康分析", to: {name: "analysis"} },
-                { text: this.$route.query.project },
+                { text: this.$route.query.project, to: {name: "analysis-detail", query: { project: this.$route.query.project}} },
+                { text: this.$route.query.repo },
             ],
             title: "Dashboard",
             chartYears: [],

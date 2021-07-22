@@ -109,7 +109,7 @@ export default {
                 </div -->
 
                 <div class="dropdown d-none d-lg-inline-block ml-1">
-                    <router-link :to="{name: 'admin-ops-routine'}">
+                    <router-link :to="{name: 'analysis'}">
                     <button type="button" class="btn header-item noti-icon">
                         <i class="bx bx-user"></i>
                         Demo User
